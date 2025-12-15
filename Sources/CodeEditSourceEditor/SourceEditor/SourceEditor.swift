@@ -116,6 +116,24 @@ public struct SourceEditor: NSViewControllerRepresentable {
         if controller.textView == nil {
             controller.loadView()
         }
+		
+		//  ---------------------------------------------------------
+    	//  INSERTED THIS BLOCK TO ENABLE TRANSPARENCY
+    	//  ---------------------------------------------------------
+	    controller.view.layer?.backgroundColor = NSColor.clear.cgColor
+    
+    	if let scrollView = controller.scrollView {
+        	scrollView.drawsBackground = false
+        	scrollView.backgroundColor = .clear
+    	    scrollView.contentView.drawsBackground = false
+	    }
+    
+    	if let textView = controller.textView {
+        	textView.drawsBackground = false
+        	textView.backgroundColor = .clear
+    	}
+    	//  ---------------------------------------------------------
+		
         if !(state.cursorPositions?.isEmpty ?? true) {
             controller.setCursorPositions(state.cursorPositions ?? [])
         }
