@@ -133,6 +133,15 @@ public struct SourceEditor: NSViewControllerRepresentable {
             // Also clear the clip view (the immediate container of the text)
             scrollView.contentView.drawsBackground = false
             scrollView.contentView.backgroundColor = NSColor.clear
+            
+            // 3. Enable "Soft" Scroll Edge Effect Behavior
+            // This flag tells AppKit to push the text content down to account for
+            // the Toolbar/Titlebar height, while allowing the scroll view bounds
+            // to extend BEHIND the toolbar (triggering the blur effect).
+            scrollView.automaticallyAdjustsContentInsets = true
+
+            // 4. Fixes an issue where the scroll bar (knob) gets hidden behind the toolbar
+            scrollView.scrollerInsets = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         //  ---------------------------------------------------------
 
