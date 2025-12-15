@@ -116,23 +116,25 @@ public struct SourceEditor: NSViewControllerRepresentable {
         if controller.textView == nil {
             controller.loadView()
         }
-		
-		//  ---------------------------------------------------------
-    	//  INSERTED THIS BLOCK TO ENABLE TRANSPARENCY
-    	//  ---------------------------------------------------------
-	    controller.view.layer?.backgroundColor = NSColor.clear.cgColor
+
+        //  ---------------------------------------------------------
+        //  INSERTED THIS BLOCK TO ENABLE TRANSPARENCY
+        //  ---------------------------------------------------------
+        // 1. Make the main controller view transparent
+        controller.view.layer?.backgroundColor = NSColor.clear.cgColor
     
-    	if let scrollView = controller.scrollView {
-        	scrollView.drawsBackground = false
-        	scrollView.backgroundColor = .clear
-    	    scrollView.contentView.drawsBackground = false
-	    }
-    
-    	if let textView = controller.textView {
-        	textView.drawsBackground = false
-        	textView.backgroundColor = .clear
-    	}
-    	//  ---------------------------------------------------------
+        // 2. Configure the ScrollView (The parent of the text view)
+        //    We only need to set this. The internal text view usually respects
+        //    the container's transparency if the Theme background is also clear.
+        if let scrollView = controller.scrollView {
+            scrollView.drawsBackground = false
+            scrollView.backgroundColor = NSColor.clear
+        
+            // Also clear the clip view (the immediate container of the text)
+            scrollView.contentView.drawsBackground = false
+            scrollView.contentView.backgroundColor = NSColor.clear
+        }
+        //  ---------------------------------------------------------
 		
         if !(state.cursorPositions?.isEmpty ?? true) {
             controller.setCursorPositions(state.cursorPositions ?? [])
