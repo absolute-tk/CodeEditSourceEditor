@@ -139,7 +139,6 @@ public struct SourceEditor: NSViewControllerRepresentable {
             // the Toolbar/Titlebar height, while allowing the scroll view bounds
             // to extend BEHIND the toolbar (triggering the blur effect).
             scrollView.automaticallyAdjustsContentInsets = true
-
             // 4. Fixes an issue where the scroll bar (knob) gets hidden behind the toolbar
             scrollView.scrollerInsets = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
